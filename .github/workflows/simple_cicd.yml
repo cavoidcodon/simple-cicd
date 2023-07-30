@@ -19,21 +19,11 @@ jobs:
       run: cmake -S . -B build && cmake --build build
     - name: test using libgtest and write result to output.txt
       run: cd build && ctest >> ../output.txt
-    - name: send notification email
-      uses: dawidd6/action-send-mail@v3
+    - uses: actions/setup-python@v2
       with:
-        server_address: smtp.gmail.com
-        server_port: 465
-        secure: true
-        username: ${{secrets.MAIL_USERNAME}}
-        password: ${{secrets.MAIL_PASSWORD}}
-        subject: Github Actions job result
-        to: sniper19121998@gmail.com
-        from: MinhHieu
-        body: Build job of ${{github.repository}} completed successfully! See the result in the attached file!
-        html_body: ${{ env.GITHUB_WORKSPACE }}/output.txt
-        ignore_cert: true
-        convert_markdown: true
-        # Optional attachments:
-        attachments: ${{ env.GITHUB_WORKSPACE }}/output.txt
-        priority: low
+        python-version: 3.x
+    - name: Run email code
+      env:
+        USER_EMAIL: ${{ secrets.MAIL_USERNAME }}
+        USER_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
+      run: python send_email.py
