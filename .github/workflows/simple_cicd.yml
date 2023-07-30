@@ -19,11 +19,3 @@ jobs:
       run: cmake -S . -B build && cmake --build build
     - name: test using libgtest and write result to output.txt
       run: cd build && ctest >> ../output.txt
-    - uses: actions/setup-python@v2
-      with:
-        python-version: 3.x
-    - name: Run email code
-      env:
-        USER_EMAIL: ${{ secrets.MAIL_USERNAME }}
-        USER_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
-      run: python send_email.py
