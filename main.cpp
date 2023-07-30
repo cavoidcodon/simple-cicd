@@ -13,5 +13,5 @@ TEST(SumTest, Positive)
 
 TEST(SumTest, Nagative) 
 { 
-    ASSERT_NE(6, sum(5, 2));
+    ASSERT_NE(6, sum(7, 2));
 }
